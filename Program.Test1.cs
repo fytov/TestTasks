@@ -3,10 +3,12 @@ using System.Linq;
 
 namespace Test
 {
-    class PhoneNumberChecker 
+    class PhoneNumberChecker
     {
         private readonly long minValue = 9000000000;
         private readonly long maxValue = 9999870000;
+        private readonly string twoDigitsInARowPattern = @"(\d)\1";
+        private readonly string threeAndMoreDigitsInARowPattern = @"(\d)\1{2,}";
         string strNumber;
 
         public PhoneNumberChecker(string strNumber)
@@ -21,9 +23,8 @@ namespace Test
 
             if (isNumber(strNumber, ref numberLoc) && isNumberInRange(numberLoc))
             {
-                count = strNumber.GroupBy(x => x)
-                                    .Where(c => c.Count() == 2)
-                                        .Count();
+                var replacedStringNumber = new Regex(threeAndMoreDigitsInARowPattern).Replace(strNumber, "-");
+                count = new Regex(twoDigitsInARowPattern).Matches(replacedStringNumber).Count();
             }
 
             return count == 0;
@@ -39,6 +40,7 @@ namespace Test
             return long.TryParse(stringNumber, out number);
         }
     }
+
     class Program
     {
         static void Main(string[] args)
