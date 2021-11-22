@@ -11,11 +11,9 @@ namespace Test4
             {
                 int intValue = 53483;
                 string strValue = "Test string";
-                double doubleValue = 10.0;
 
                 Console.WriteLine($"{intValue} => {ProcessValue(intValue)}");
                 Console.WriteLine($"{strValue} => {ProcessValue(strValue)}");
-                Console.WriteLine($"{doubleValue} => {ProcessValue(doubleValue)}");
             }
             catch (Exception e)
             {
@@ -23,38 +21,22 @@ namespace Test4
             }           
         }
 
-        static object ProcessValue(object value)
+        static string ProcessValue(string value)
         {
-            if (value is String valueStr)
-            {
-                return GetInversionString(valueStr);
-            }
-            else if (value is int valueInt)
-            {
-                return GetSum(valueInt);
-            }
-            else
-            {
-                throw new ArgumentException("Please pass the correct value. Available types: int, string");
-            }
+            return new string(value.ToCharArray().Reverse().ToArray());
         }
 
-        private static int GetSum(int valueInt)
+        static int ProcessValue(int value)
         {
             var sum = 0;
 
-            while (valueInt != 0)
+            while (value != 0)
             {
-                sum += valueInt % 10;
-                valueInt /= 10;
+                sum += value % 10;
+                value /= 10;
             }
 
             return sum;
-        }
-
-        private static string GetInversionString(string valueStr)
-        {
-            return new string(valueStr.ToCharArray().Reverse().ToArray());
         }
     }
 }
