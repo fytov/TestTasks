@@ -23,7 +23,9 @@ namespace Test2
                     findDate = inputDate.AddDays(minDistanceToWednesday);
 
                     Console.WriteLine(!isEvenDay(findDate)
-                        ? findDate.AddDays(-Math.Sign(minDistanceToWednesday) * DaysInWeek)
+                        ? findDate.AddDays(minDistanceToWednesday == 0 
+                                            ? DaysInWeek
+                                            : -Math.Sign(minDistanceToWednesday) * DaysInWeek)
                         : findDate);
                 }
                 inputDateString = Console.ReadLine();
